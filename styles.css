@@ -1,0 +1,51 @@
+/* CSS for the banner */
+.banner {
+  background-color: #f2f2f2;
+  padding: 20px;
+  text-align: center;
+}
+
+/* CSS for the logo */
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  text-align: center;
+  gap: 20px;
+  padding: 40px;
+}
+.logo {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto;
+  background-image: url('ZG.png');
+  background-size: cover;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+/* CSS for the embedded app */
+.app {
+  width: 420px;
+  height: 725px;
+}
+
+/* CSS for the data picture */
+.data-picture {
+  margin: 20px auto;
+  width: 420px;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  margin-top: 100px;
+  padding: 25px;
+}
+
+/* Media query for bigger screens */
+@media screen and (min-width: 768px) {
+  .app,
+  .data-picture {
+    margin: 20px;
+  }
+}

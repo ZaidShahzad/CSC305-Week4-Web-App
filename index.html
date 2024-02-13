@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zaid's Front-End Web App</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="banner">
+    <div class="logo"></div>
+  </div>
+  <div class="container">
+    <div class="app">
+      <h1>Profile Application</h1>
+      <!-- Embed your Thunkable profile app here -->
+      <!-- Replace the src attribute with the URL of your app -->
+      <iframe src="https://thunkable.site/w/JE4BncWWcOQ0TiUrbndcF" title="Chop Down the Tree Thunkable App" height="100%" width="100%"></iframe>
+    </div>
+    <div>
+      <div class="data-picture">
+        <h1>Data Picture</h1>
+        <!-- Add your data picture here -->
+        <!-- Replace the src attribute with the URL of your data picture -->
+        <img src="RTDB Data.png" alt="Data Picture" style="width: 100%; height: 100%; object-fit: cover;">
+        <h1>RTDB Data (Code)</h1>
+        <p id="rtdb-data">default</p> <!-- Add this line to include the pre tag for the RTDB data -->
+        <img src="FetchDataCode.png" alt="Data Picture" style="width: 100%; height: 100%; object-fit: cover;">
+      </div>
+    </div>
+  </div>
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDMRYMRt-LXMrmak3n6o4Nbs1ABW3JdEKU",
+      authDomain: "week-3-profile-app.firebaseapp.com",
+      databaseURL: "https://week-3-profile-app-default-rtdb.firebaseio.com",
+      projectId: "week-3-profile-app",
+      storageBucket: "week-3-profile-app.appspot.com",
+      messagingSenderId: "923866947164",
+      appId: "1:923866947164:web:fb62ae1aeebf2e29ced099",
+      measurementId: "G-PBVTHFYJPY"
+    };
+    const app = firebase.initializeApp(firebaseConfig);
+  
+    document.addEventListener('DOMContentLoaded', function() {
+      const database = firebase.database(app);
+      document.getElementById("rtdb-data").innerText = "Fetching data...";
+  
+      function fetchDataFromRTDB(path) {
+        const ref = database.ref(path);
+        ref.once("value").then((snapshot) => {
+          const data = snapshot.val();
+          formatAndDisplayData(data);
+        }).catch((error) => {
+          console.error("Error fetching data: ", error);
+          document.getElementById("rtdb-data").innerText = "Error fetching data";
+        });
+      }
+  
+      function formatAndDisplayData(data) {
+        let formattedData = "";
+        Object.keys(data).forEach(key => {
+          if (typeof data[key] === 'object') {
+            formattedData += key + ":\n";
+            Object.keys(data[key]).forEach(property => {
+              formattedData += "* " + property + ": " + data[key][property] + "\n";
+            });
+          } else {
+            formattedData += key + ": " + data[key] + "\n";
+          }
+          formattedData += "\n";
+        });
+        document.getElementById("rtdb-data").innerText = formattedData;
+      }
+  
+      fetchDataFromRTDB('/');
+    });
+  </script>
+  
+</body>
+</html>

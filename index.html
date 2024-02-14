@@ -65,18 +65,21 @@
           if (typeof data[key] === 'object') {
             formattedData += key + ":\n";
             Object.keys(data[key]).forEach(property => {
-              formattedData += "* " + property + ": " + data[key][property] + "\n";
+              if (property === 'image') {
+                formattedData += "Image: " + `<img src="${data[key][property]}" alt="Data Image" style="width: 100px; height: 100px; object-fit: cover;">`;
+              } else {
+                formattedData += `<p>* ${property}: ${data[key][property]}</p>`;
+              }
             });
           } else {
             formattedData += key + ": " + data[key] + "\n";
           }
-          formattedData += "\n";
         });
-        document.getElementById("rtdb-data").innerText = formattedData;
+        document.getElementById("rtdb-data").innerHTML = formattedData;
       }
-  
+
       fetchDataFromRTDB('/');
-    });
+      });
   </script>
   
 </body>
